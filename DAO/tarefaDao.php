@@ -16,7 +16,6 @@ class tarefaDao {
 
     public function insert(Tarefa $tarefa) {
         $query = "INSERT INTO `tarefa`( `nome`, `descricao`, `ativo`) VALUES (:nome,:descricao,:ativo)";
-
         try{
             $stmt = $this->conexao->prepare($query);
             $stmt->bindValue(":nome",$tarefa->getNome());
@@ -62,11 +61,12 @@ class tarefaDao {
             $stmt->bindValue(":nome",$tarefa->getNome());
             $stmt->bindValue(":descricao",$tarefa->getDescricao());
             $stmt->bindValue(":ativo",$tarefa->getAtivo());
+
             return $stmt->execute();
+
         }catch(PDOException $e){
             print($e);
         }
-
     }
 
     /** Deleta uma tarefa

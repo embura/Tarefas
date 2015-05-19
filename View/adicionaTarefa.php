@@ -19,7 +19,6 @@
 </head>
 <body>
 
-<h2>Adiciona tarefas</h2>
 <?php
 require_once '../Model/tarefa.php';
 
@@ -39,30 +38,38 @@ if (isset($_REQUEST ['gravar'])) {
 
 
     if ($tarefaDao->insert ( $tarefa )) {
-        echo '<p class="alert-success">Tarefa inserida com sucesso</p>';
 
+        echo '<p class="alert alert-success" role="alert">Tarefa adicionada com sucesso</p>';
+    }else{
+        echo '<p class="alert alert-danger" role="alert">Tarefa não adicionada</inser>ida</p>';
     }
+
 }
 ?>
-<p>
-    <a href="adminTarefas.php">Menu tarefas</a>
-</p>
 
-<div class="panel-group" sytle="width:300px">
+<div class="page-header">
+    <h1>Adiciona Tarefa</h1>
+</div>
+
+<a href="menuTarefas.php"><span class="glyphicon glyphicon-arrow-left" ></span>Menu tarefas</a>
+
+<div class="container">
     <form method="post" class="form-horizontal" action="adicionaTarefa.php" id="adicionaTarefa">
-        <div>
-            <label>Nome</label>
+        <div class="form-group">
+            <label for="nome">Nome</label>
             <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome da Tarefa"/>
         </div>
-        <div>
-            <label>Descricao </label>
-            <textarea name="descricao" class="form-control" rows="4" cols="50" placeholder="Descrição da Tarefa"></textarea>
+        <div class="form-group">
+            <label for="descricao">Descricao </label>
+            <textarea name="descricao" class="form-control" rows="4" placeholder="Descrição da Tarefa"></textarea>
         </div>
-        <div>
-            <label>Ativo </label>
+        <div class="form-group">
+            <label for="ativo">Ativo </label>
             <input type="checkbox" class="" name="ativo" value="true" checked />
         </div>
-        <input type="submit" class="btn btn-default" name="gravar" value="gravar " />
+        <div class="form-group">
+            <input type="submit" class="btn btn-default" name="gravar" value="gravar " />
+        </div>
     </form>
 </div>
 

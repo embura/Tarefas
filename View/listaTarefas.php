@@ -1,7 +1,9 @@
-<!DOCTYPE>
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=GBK">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="stylesheet" type="text/css" href="Resources/css/style.css">
 
 
@@ -31,7 +33,7 @@ print_r($tarefas);
 exit();*/
 
 ?>
-<a href="AdminTarefas.php">Menu tarefas</a>
+<a href="menuTarefas.php">Menu tarefas</a>
 <table class="table  table-striped table-bordered table-condensed">
     <tr>
         <th>ID</th>
