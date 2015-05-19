@@ -10,3 +10,7 @@ table, td, th {
     color:green;
     font-size: 150%;
 }
+
+.adicionaTarefa{
+    width: 300px;
+}

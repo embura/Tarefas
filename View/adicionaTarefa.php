@@ -53,25 +53,27 @@ if (isset($_REQUEST ['gravar'])) {
 
 <a href="menuTarefas.php"><span class="glyphicon glyphicon-arrow-left" ></span>Menu tarefas</a>
 
-<div class="container">
-    <form method="post" class="form-horizontal" action="adicionaTarefa.php" id="adicionaTarefa">
-        <div class="form-group">
-            <label for="nome">Nome</label>
-            <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome da Tarefa"/>
-        </div>
-        <div class="form-group">
-            <label for="descricao">Descricao </label>
-            <textarea name="descricao" class="form-control" rows="4" placeholder="Descrição da Tarefa"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="ativo">Ativo </label>
-            <input type="checkbox" class="" name="ativo" value="true" checked />
-        </div>
-        <div class="form-group">
-            <input type="submit" class="btn btn-default" name="gravar" value="gravar " />
-        </div>
-    </form>
-</div>
+<div class="adicionaTarefa">
+    <div class="container adicionaTarefa">
+        <form method="post" class="form-group" action="adicionaTarefa.php" id="adicionaTarefa">
+            <div class="form-group">
+                <label for="nome">Nome</label>
+                <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome da Tarefa" required autofocus/>
+            </div>
+            <div class="form-group">
+                <label for="descricao">Descricao </label>
+                <textarea name="descricao" class="form-control" rows="4" placeholder="Descrição da Tarefa" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="ativo">Ativo </label>
+                <input type="checkbox" class="" name="ativo" value="true" checked />
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary btn-lg btn-block" name="gravar" value="gravar " />
+            </div>
+        </form>
+    </div>
+<div>
 
 </body>
 

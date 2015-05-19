@@ -74,11 +74,11 @@ unset ( $_SESSION );
         </div>
         <div class="form-group">
             <label>Nome</label>
-            <input type="text" class="form-control" name="nome" id="nome" value="<?=$tarefa->getNome();?>"/>
+            <input type="text" class="form-control" name="nome" id="nome" value="<?=$tarefa->getNome();?>" required>
         </div>
         <div class="form-group">
             <label>Descricao </label>
-            <textarea name="descricao" class="form-control" rows="4" placeholder="Descrição da Tarefa"><?=$tarefa->getDescricao();?></textarea>
+            <textarea name="descricao" class="form-control" rows="4" placeholder="Descrição da Tarefa" required><?=$tarefa->getDescricao();?></textarea>
         </div>
         <div class="form-group">
             <label>Ativo </label>
