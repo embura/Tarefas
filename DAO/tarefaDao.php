@@ -1,6 +1,6 @@
 <?php
 require_once '../DB/DB.php';
-require_once '../Model/Tarefa.php';
+require_once '../Model/tarefa.php';
 
 /**
  * Class tarefaDao reponsavel por persistir tarefa na bando de dados
@@ -33,8 +33,6 @@ class tarefaDao {
      * @return ArrayObject Tarefa
      */
     public function selectAll() {
-        $tarefa = new Tarefa();
-        $tarefas = new ArrayObject ();
         $query = "SELECT * FROM `tarefa`";
         $stmt = $this->conexao->query($query);
         return $stmt->fetchAll(PDO::FETCH_CLASS,'Tarefa');

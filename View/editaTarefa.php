@@ -8,7 +8,7 @@
 <h2>Edita Tarefa</h2>
 <a href="adminTarefas.php">Menu tarefas</a>
 <?php
-require_once '../Model/Tarefa.php';
+require_once '../Model/tarefa.php';
 require_once '../DAO/tarefaDao.php';
 
 session_start ();
@@ -26,7 +26,8 @@ if ($_REQUEST ['id']) {
 
 
 
-if ($_REQUEST ['gravar']) {
+if (isset($_REQUEST ['gravar'])) {
+
     $arrayForm = $_REQUEST;
     $id = $_SESSION['id'];
     $ativo = ($arrayForm ['ativo'] == 'true') ? 1 : 0;
