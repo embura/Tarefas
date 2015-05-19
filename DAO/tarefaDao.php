@@ -1,70 +1,84 @@
 <?php
 require_once '../DB/DB.php';
-require_once '../Model/tarefa.php';
+require_once '../Model/Tarefa.php';
+
+/**
+ * Class tarefaDao reponsavel por persistir tarefa na bando de dados
+ */
 class tarefaDao {
-	private $conexao;
+    private $conexao;
 
-	public function __construct() {
-		$db = new DB ();
-		$this->conexao = $db->getConnection ();
-	}
-	
-	/**
-	 *
-	 * @param String $nome
-	 * @param String $descricao
-	 * @param int $ativo
-	 * @return resource boolean
-	 */
-	public function insert(Tarefa $tarefa) {
-		$query = "INSERT INTO `tarefa`( `nome`, `descricao`, `ativo`) VALUES ('{$tarefa->getNome()}','{$tarefa->getDescricao()}','{$tarefa->getAtivo()}')";
-		return $this->conexao->query( $query);
-	}
-	
-	/**
-	 * Pegar todas as terafas
-	 * @return ArrayObject Tarefa
-	 */
-	public function selectAll() {
-		$tarefas = new ArrayObject ();
-		$query = "SELECT * FROM `tarefa`";
-        $result = $this->conexao->query( $query);
+    public function __construct() {
+        $db = new DB ();
+        $this->conexao = $db->getConnection();
+    }
 
-		if ($result->num_rows > 0) {
-            while ( $tarefa = $result->fetch_object('tarefa')  ) {
-				$tarefas->append ( $tarefa );
-			}
-		}
-		return $tarefas;
-	}
+
+    public function insert(Tarefa $tarefa) {
+        $query = "INSERT INTO `tarefa`( `nome`, `descricao`, `ativo`) VALUES (:nome,:descricao,:ativo)";
+
+        try{
+            $stmt = $this->conexao->prepare($query);
+            $stmt->bindValue(":nome",$tarefa->getNome());
+            $stmt->bindValue(":descricao",$tarefa->getDescricao());
+            $stmt->bindValue(":ativo",$tarefa->getAtivo());
+            return $stmt->execute();
+        }catch(Exception $e){
+            print($e->getMessage());
+        }
+    }
+
+    /**
+     * Pegar todas as terafas
+     * @return ArrayObject Tarefa
+     */
+    public function selectAll() {
+        $tarefa = new Tarefa();
+        $tarefas = new ArrayObject ();
+        $query = "SELECT * FROM `tarefa`";
+        $stmt = $this->conexao->query($query);
+        return $stmt->fetchAll(PDO::FETCH_CLASS,'Tarefa');
+    }
 
     /**
      * @param $idTarefa
      * @return object tarefa
      */
     public function getTarefa($idTarefa) {
-		$query = "SELECT * FROM `tarefa` where id = " . $idTarefa;
-		$result = $this->conexao->query( $query );
-		return $result->fetch_object('tarefa');
-	}
+        $query = "SELECT * FROM `tarefa` where id = " . $idTarefa;
+        $result = $this->conexao->query( $query );
+        return $result->fetchObject('Tarefa');
+    }
 
     /** Executa update da tarefa
      * @param Tarefa $tarefa
      * @return bool|mysqli_result
      */
     public function update(Tarefa $tarefa) {
-		$query = "UPDATE `tarefa` SET `nome`='{$tarefa->getNome()}',`descricao`='{$tarefa->getDescricao()}',`ativo`='{$tarefa->getAtivo()}' WHERE id = " . $tarefa->getId ();
-		return $this->conexao->query ( $query);
-	}
+
+        $query = "UPDATE `tarefa` SET `nome`=:nome,`descricao`=:descricao,`ativo`=:ativo WHERE id = :id";
+
+        try{
+            $stmt = $this->conexao->prepare($query);
+            $stmt->bindValue(":id",$tarefa->getID());
+            $stmt->bindValue(":nome",$tarefa->getNome());
+            $stmt->bindValue(":descricao",$tarefa->getDescricao());
+            $stmt->bindValue(":ativo",$tarefa->getAtivo());
+            return $stmt->execute();
+        }catch(PDOException $e){
+            print($e);
+        }
+
+    }
 
     /** Deleta uma tarefa
      * @param $id
      * @return bool|mysqli_result
      */
     public function delete($id) {
-		$query = "DELETE FROM `tarefa` WHERE id=" . $id;
-		return $this->conexao->query ( $query);
-	}
+        $query = "DELETE FROM `tarefa` WHERE id=" . $id;
+        $stmt = $this->conexao->prepare($query);
+        return $stmt->execute();
+    }
 }
 
-?>

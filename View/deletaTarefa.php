@@ -8,17 +8,15 @@
 
 	<h2>Remove tarefas</h2>
 <?php
-require_once '../Model/tarefa.php';
-require_once '../DAO/tarefaDao.php';
 
-$tarefas = new tarefa ();
+require_once '../DAO/tarefaDao.php';
 $tarefaDao = new tarefaDao ();
 
 if($_REQUEST['id']){
     $id = $_REQUEST['id'];
 	
 	if($tarefaDao->delete($id)){
-		echo "Tarefa Removida";
+        header("location:listaTarefas.php");
     }
 }
 

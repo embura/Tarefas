@@ -9,13 +9,11 @@
 
 <h2>Lista tarefas</h2>
 <?php
-require_once '../Model/tarefa.php';
+require_once '../Model/Tarefa.php';
 require_once '../DAO/tarefaDao.php';
 
-$tarefas = new tarefa ();
 $tarefaDao = new tarefaDao();
-
-$tarefas = $tarefaDao->selectAll ();
+$tarefas = $tarefaDao->selectAll();
 
 /*
 echo "<pre>";
@@ -37,7 +35,7 @@ exit();*/
         ?>
         <tr>
             <td><?=$tarefa->getID();?></td>
-            <td><?=$tarefa->getNome();?></td>
+            <td ><?=$tarefa->getNome();?></td>
             <td><?=$tarefa->getAtivo();?></td>
             <td><a href="editaTarefa.php?id=<?=$tarefa->getID()?>" >Editar</a></td>
             <td><a href="deletaTarefa.php?id=<?=$tarefa->getID()?>" >Remover</a></td>

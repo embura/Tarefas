@@ -1,42 +1,44 @@
 <?php
+/**
+ * Class DB prove acesso ao bando de dados
+ */
 class DB {
-	private $host;
-	private $user;
-	private $password;
-	private $conexao;
-	private $dbName;
-	
-	
-	public function __construct() {
-		$this->host = "localhost:3306";
-		$this->dbName = "tarefas";
-		$this->user = "root";
-		$this->password = "";
-	}
-	
-	
-	public function getConnection() {
 
-        // Conecta-se ao banco de dados MySQL
-		//$this->conexao = mysql_connect( $this->host, $this->user, $this->password,$this->dbName );
-        $this->conexao = new mysqli($this->host, $this->user,  $this->password, $this->dbName);
+    private $host;
+    private $username;
+    private $password;
+    private $conexao;
+    private $dbName;
+    private $driver;
 
-        // Caso algo tenha dado errado, exibe uma mensagem de erro
-        if (mysqli_connect_errno()){
-            trigger_error(mysqli_connect_error());
+
+    public function __construct() {
+        $this->host = "localhost:3306";
+        $this->dbName = "tarefas";
+        $this->username = "root";
+        $this->password = "";
+        $this->driver = "mysql";
+    }
+
+
+    /**
+     * @return PDO
+     */
+    public function getConnection() {
+
+        try{
+            $this->conexao = new PDO("mysql:host=localhost;dbname=tarefas",
+                $this->username, $this->password);
+
+            $this->conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->conexao->setAttribute(PDO::ATTR_ORACLE_NULLS, PDO::NULL_EMPTY_STRING);
+
+            return $this->conexao;
+        }catch(PDOException $e){
+            print($e);
         }
-		return $this->conexao;
-	}
-	
-	
-	function close(){
-		mysql_close($this->conexao);
-	}
-	
-	
-	
-	
-	
+    }
+
 }
 
 ?>
