@@ -1,5 +1,5 @@
 <?php
-class tarefa {
+class Tarefa {
 	private $id;
 	private $nome;
 	private $descricao;
