@@ -33,28 +33,30 @@ print_r($tarefas);
 exit();*/
 
 ?>
-<a href="menuTarefas.php">Menu tarefas</a>
-<table class="table  table-striped table-bordered table-condensed">
-    <tr>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>Ativo</th>
-        <th>Editar</th>
-        <th>Remover</th>
-    </tr>
-    <?php
-    foreach ( $tarefas as $tarefa ) {
-        ?>
+<p></p><a href="menuTarefas.php">Menu tarefas</a></p>
+<div class="col-md-10 col-md-offset-1">
+    <table class="table  table-striped table-bordered table-condensed">
         <tr>
-            <td><?=$tarefa->getID();?></td>
-            <td ><?=$tarefa->getNome();?></td>
-            <td><?=$tarefa->getAtivo();?></td>
-            <td><a href="editaTarefa.php?id=<?=$tarefa->getID()?>" >Editar</a></td>
-            <td><a href="deletaTarefa.php?id=<?=$tarefa->getID()?>" >Remover</a></td>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Ativo</th>
+            <th>Editar</th>
+            <th>Remover</th>
         </tr>
-    <?php
-    }
-    ?>
-</table>
+        <?php
+        foreach ( $tarefas as $tarefa ) {
+            ?>
+            <tr>
+                <td><?=$tarefa->getID();?></td>
+                <td ><?=$tarefa->getNome();?></td>
+                <td><?=$tarefa->getAtivo();?></td>
+                <td><a href="editaTarefa.php?id=<?=$tarefa->getID()?>" >Editar</a></td>
+                <td><a href="deletaTarefa.php?id=<?=$tarefa->getID()?>" >Remover</a></td>
+            </tr>
+        <?php
+        }
+        ?>
+    </table>
+</div>
 </body>
 </html>

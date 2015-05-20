@@ -3,7 +3,8 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=GBK">
     <title>Adiciona Tarefa</title>
-    <script type="text/javascript" src="Resources/js/adicinaTarefa.js" ></script>
+
+
     <script type="text/javascript" src="Resources/js/jquery-1.11.3.min.js" ></script>
 
     <!-- Latest compiled and minified CSS -->
@@ -14,6 +15,9 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="Resources/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="Resources/js/adicinaTarefa.js" ></script>
+    <link rel="stylesheet" href="Resources/css/style.css">
 
 
 </head>
@@ -51,10 +55,14 @@ if (isset($_REQUEST ['gravar'])) {
     <h1>Adiciona Tarefa</h1>
 </div>
 
-<a href="menuTarefas.php"><span class="glyphicon glyphicon-arrow-left" ></span>Menu tarefas</a>
+<p>
+    <a href="menuTarefas.php">
+        <span class="glyphicon glyphicon-arrow-left" ></span>Menu tarefas
+    </a>
+</p>
 
-<div class="adicionaTarefa">
-    <div class="container adicionaTarefa">
+<div class="col-md-10 col-md-offset-1">
+    <div class="container">
         <form method="post" class="form-group" action="adicionaTarefa.php" id="adicionaTarefa">
             <div class="form-group">
                 <label for="nome">Nome</label>
@@ -68,12 +76,12 @@ if (isset($_REQUEST ['gravar'])) {
                 <label for="ativo">Ativo </label>
                 <input type="checkbox" class="" name="ativo" value="true" checked />
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-2">
                 <input type="submit" class="btn btn-primary btn-lg btn-block" name="gravar" value="gravar " />
             </div>
         </form>
     </div>
-<div>
+    <div>
 
 </body>
 

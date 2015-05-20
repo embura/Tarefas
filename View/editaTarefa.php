@@ -14,6 +14,10 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="Resources/js/bootstrap.min.js"></script>
+
+
+    <script type="text/javascript" src="Resources/js/adicinaTarefa.js" ></script>
+    <link rel="stylesheet" href="Resources/css/style.css">
 </head>
 <body>
 
@@ -65,30 +69,32 @@ unset ( $_SESSION );
 </div>
 
 <a href="menuTarefas.php"><span class="glyphicon glyphicon-arrow-left" ></span>Menu tarefas</a>
-<div class="container">
-    <form method="post" action="editaTarefa.php">
+<div class="adicionaTarefa">
+    <div class="container">
+        <form method="post" class="form-group" action="editaTarefa.php">
 
-        <div class="form-group">
-            <label for="nome">ID :</label>
-            <input type="text" name="nome" id="nome" value="<?=$tarefa->getID();?>"  disabled><br />
-        </div>
-        <div class="form-group">
-            <label>Nome</label>
-            <input type="text" class="form-control" name="nome" id="nome" value="<?=$tarefa->getNome();?>" required>
-        </div>
-        <div class="form-group">
-            <label>Descricao </label>
-            <textarea name="descricao" class="form-control" rows="4" placeholder="Descrição da Tarefa" required><?=$tarefa->getDescricao();?></textarea>
-        </div>
-        <div class="form-group">
-            <label>Ativo </label>
-            <input type="checkbox" class="" name="ativo" value="true" <?=$checked?> />
-        </div>
-        <div class="form-group">
-            <input type="submit" class="btn btn-default" name="gravar" value="gravar " />
-        </div>
+            <div class="form-group">
+                <label for="nome">ID :</label>
+                <input type="text" name="nome" id="nome" value="<?=$tarefa->getID();?>"  disabled><br />
+            </div>
+            <div class="form-group">
+                <label>Nome</label>
+                <input type="text" class="form-control" name="nome" id="nome" value="<?=$tarefa->getNome();?>" required>
+            </div>
+            <div class="form-group">
+                <label>Descricao </label>
+                <textarea name="descricao" class="form-control" rows="4" placeholder="Descrição da Tarefa" required><?=$tarefa->getDescricao();?></textarea>
+            </div>
+            <div class="form-group">
+                <label>Ativo </label>
+                <input type="checkbox" class="" name="ativo" value="true" <?=$checked?> />
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-default" name="gravar" value="gravar " />
+            </div>
 
-    </form>
+        </form>
+    </div>
 </div>
 </body>
 </html>
