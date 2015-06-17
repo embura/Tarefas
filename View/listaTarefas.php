@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" type="text/css" href="Resources/css/style.css">
+    <script type="text/javascript" src="Resources/js/jquery-1.11.3.min.js" ></script>
+
 
 
     <!-- Latest compiled and minified CSS -->
@@ -15,48 +17,90 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="Resources/js/bootstrap.min.js"></script>
+
+    <script src="Resources/js/tarefa.js"></script>
+
     <title>Lista Tarefa</title>
 </head>
 <body>
 
 <h2>Lista tarefas</h2>
+
+<div>
+    <div class="list-inline" >
+        <ul>
+            <il>
+                <div class="form-inline">
+                    <a class="btn btn-primary" href="adicionaTarefa.php">New</a>
+                    <!--
+                    <form action="actions/busca.php" method="POST">
+                        <input type="search" results="10" name="busca" id="busca" placeholder="Nome tarefa...">
+                        <button type="button" class="btn = btn-primary" id="busca" name="busca">Buscar</button>
+                    </form>
+                    -->
+                </div>
+            </il>
+            <il>
+
+
+            </il>
+        </ul>
+    </div>
+</div>
+
 <?php
-require_once '../Model/tarefa.php';
-require_once '../DAO/tarefaDao.php';
+
+if(!defined('ROOT_DIR'))
+    define('ROOT_DIR',$_SERVER['DOCUMENT_ROOT'].'/Tarefas/');
+
+
+require_once ROOT_DIR.'/Model/tarefa.php';
+require_once ROOT_DIR.'/DAO/tarefaDao.php';
 
 $tarefaDao = new tarefaDao();
 $tarefas = $tarefaDao->selectAll();
-
-/*
-echo "<pre>";
-print_r($tarefas);
-exit();*/
-
 ?>
+
+
 <p></p><a href="menuTarefas.php">Menu tarefas</a></p>
+
+<div id="result"></div>
 <div class="col-md-10 col-md-offset-1">
-    <table class="table  table-striped table-bordered table-condensed">
+    <table class="table  table-striped table-bordered table-condensed" id="lista">
         <tr>
             <th>ID</th>
             <th>Nome</th>
-            <th>Ativo</th>
+            <th>Data Finalização</th>
             <th>Editar</th>
             <th>Remover</th>
         </tr>
         <?php
         foreach ( $tarefas as $tarefa ) {
             ?>
-            <tr>
+            <tr id=tarefa_<?=$tarefa->getID();?>>
                 <td><?=$tarefa->getID();?></td>
                 <td ><?=$tarefa->getNome();?></td>
-                <td><?=$tarefa->getAtivo();?></td>
-                <td><a href="editaTarefa.php?id=<?=$tarefa->getID()?>" >Editar</a></td>
-                <td><a href="deletaTarefa.php?id=<?=$tarefa->getID()?>" >Remover</a></td>
+                <td class="tdDate">
+                    <?php if($tarefa->getAtivo() == 1){?>
+                        <a href="#" onClick="return  finalizaTarefa('<?=$tarefa->getID();?>')" >Finalizar</a>
+                    <?php }else{?>
+                        <?=($tarefa->getDataFinalizacao());?>
+                    <?php }?>
+                </td>
+                <td>
+                    <a href="editaTarefa.php?id=<?=$tarefa->getID()?>" >Editar</a>
+                </td>
+                <td>
+                    <a href="#" onClick="removeTarefa(<?=$tarefa->getID();?>)" >Remover</a>
+                </td>
             </tr>
         <?php
         }
         ?>
     </table>
 </div>
+
+
+
 </body>
 </html>

@@ -28,15 +28,16 @@
 <div class="col-md-5 col-md-offset-1" >
     <div class="list-group-item">
         <ul>
-            <li class="list-group-item"><span class="glyphicon glyphicon-plus"></span><a href="adicionaTarefa.php">Adiciona Tarefas</a></li>
-            <!-- <li><a href="editaTarefa.php">Editar Tarefas</a></li>  -->
-            <!--  <li><a href="adicionaTarefa.php">Excluir Tarefas</a></li> -->
-            <li class="list-group-item"><span class="glyphicon glyphicon-list"></span><a href="listaTarefas.php">Lista Tarefas</a></li>
-
+            <li class="list-group-item">
+                <span class="glyphicon glyphicon-plus"></span>
+                <a href="adicionaTarefa.php">Adiciona Tarefas</a>
+            </li>
+            <li class="list-group-item">
+                <span class="glyphicon glyphicon-list"></span>
+                <a href="listaTarefas.php">Lista Tarefas</a>
+            </li>
         </ul>
     </div>
 </div>
-
 </body>
-
 </html>

@@ -28,10 +28,14 @@ class DB {
     public function getConnection() {
 
         try{
-            //$this->conexao = new PDO("mysql:host=localhost;dbname=tarefas",$this->username, $this->password);
+            //$this->conexao = new PDO("mysql:host=localhost;
+                        //              dbname=tarefas",
+                        //              $this->username,
+                        //              $this->password);
             $this->conexao = new PDO($this->dsn,$this->username, $this->password);
             $this->conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->conexao->setAttribute(PDO::ATTR_ORACLE_NULLS, PDO::NULL_EMPTY_STRING);
+            $this->conexao->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
             return $this->conexao;
         }catch(PDOException $e){
             echo "<pre>";

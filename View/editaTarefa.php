@@ -16,51 +16,26 @@
     <script src="Resources/js/bootstrap.min.js"></script>
 
 
-    <script type="text/javascript" src="Resources/js/adicinaTarefa.js" ></script>
+    <script type="text/javascript" src="Resources/js/tarefa.js" ></script>
     <link rel="stylesheet" href="Resources/css/style.css">
 </head>
 <body>
-
 <?php
-require_once '../Model/tarefa.php';
-require_once '../DAO/tarefaDao.php';
+if(!defined('ROOT_DIR'))
+    define('ROOT_DIR',$_SERVER['DOCUMENT_ROOT'].'/Tarefas/');
+
+require_once ROOT_DIR.'/Model/tarefa.php';
+require_once ROOT_DIR.'/DAO/tarefaDao.php';
 
 session_start ();
 
-$tarefa = new Tarefa();
+
 $tarefaDao = new tarefaDao ();
 
-
-if ($_REQUEST ['id']) {
-    $id = $_REQUEST ['id'];
-    $tarefa = $tarefaDao->getTarefa ( $id );
-    $_SESSION ['id'] = $id;
-    $checked = ($tarefa->getAtivo () == '1') ? 'checked' : '';
-}
-
-
-
-if (isset($_REQUEST ['gravar'])) {
-
-    $arrayForm = $_REQUEST;
-    $id = $_SESSION['id'];
-    $ativo = ($arrayForm ['ativo'] == 'true') ? 1 : 0;
-
-    $tarefa->setID ( $id );
-    $tarefa->setNome ( $arrayForm ['nome'] );
-    $tarefa->setDescricao ( $arrayForm ['descricao'] );
-    $tarefa->setAtivo ( $ativo );
-
-    if ($tarefaDao->update ( $tarefa )) {
-        header("location:listaTarefas.php");
-    }else{
-        echo '<p class="alert alert-danger" role="alert">Tarefa não inserrida</p>';
-    }
-
-}
-
+$id = $_REQUEST ['id'];
+$tarefa = $tarefaDao->find ( $id );
+$_SESSION ['id'] = $id;
 $checked = ($tarefa->getAtivo () == '1') ? 'checked' : '';
-unset ( $_SESSION );
 
 ?>
 
@@ -71,26 +46,33 @@ unset ( $_SESSION );
 <a href="menuTarefas.php"><span class="glyphicon glyphicon-arrow-left" ></span>Menu tarefas</a>
 <div class="adicionaTarefa">
     <div class="container">
-        <form method="post" class="form-group" action="editaTarefa.php">
+        <form method="post" class="form-group" action="actions/edita.php">
 
             <div class="form-group">
-                <label for="nome">ID :</label>
-                <input type="text" name="nome" id="nome" value="<?=$tarefa->getID();?>"  disabled><br />
+                <label for="id">ID :</label>
+                <input type="text" name="id" id="id" value="<?=$tarefa->getID();?>"  ><br />
             </div>
             <div class="form-group">
                 <label>Nome</label>
                 <input type="text" class="form-control" name="nome" id="nome" value="<?=$tarefa->getNome();?>" required>
             </div>
             <div class="form-group">
-                <label>Descricao </label>
+                <label>Descrição </label>
                 <textarea name="descricao" class="form-control" rows="4" placeholder="Descrição da Tarefa" required><?=$tarefa->getDescricao();?></textarea>
             </div>
-            <div class="form-group">
-                <label>Ativo </label>
-                <input type="checkbox" class="" name="ativo" value="true" <?=$checked?> />
+
+
+
+            <div class="form-group form-inline" >
+                <label for="ativo">Ativo </label>
+                <input type="checkbox" class="" name="ativo" value="true" <?=$checked?> >
+                <span class="col-md-offset-1"></span>
+                <label for="dataFinalizacao">Data Finalização</label>
+                <input type="date" class="form-control" name="dataFinalizacao" value="<?=$tarefa->getDataFinalizacao();?>" required>
             </div>
+
             <div class="form-group">
-                <input type="submit" class="btn btn-default" name="gravar" value="gravar " />
+                <button type="submit" class="btn btn-default" name="gravar" value="gravar " >Gravar</button>
             </div>
 
         </form>

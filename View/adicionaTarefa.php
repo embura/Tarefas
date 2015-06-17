@@ -6,6 +6,9 @@
 
 
     <script type="text/javascript" src="Resources/js/jquery-1.11.3.min.js" ></script>
+    <script type="text/javascript" src="Resources/js/tarefa.js" ></script>
+    <link rel="stylesheet" href="Resources/css/style.css">
+
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="Resources/css/bootstrap.min.css">
@@ -16,68 +19,56 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="Resources/js/bootstrap.min.js"></script>
 
-    <script type="text/javascript" src="Resources/js/adicinaTarefa.js" ></script>
-    <link rel="stylesheet" href="Resources/css/style.css">
+    <script>
+    </script>
 
+    <style>
+        :invalid {
+            outline: 1px solid #cc0000;
+        }
+
+    </style>
 
 </head>
 <body>
 
-<?php
-require_once '../Model/tarefa.php';
-
-if (isset($_REQUEST ['gravar'])) {
-    $tarefa = new Tarefa ();
-
-    require_once '../DAO/tarefaDao.php';
-    $tarefaDao = new tarefaDao ();
-
-    $arrayForm = $_REQUEST;
-
-    $ativo = ($arrayForm['ativo'] == 'true')?'1':'0';
-
-    $tarefa->setNome ( $arrayForm ['nome'] );
-    $tarefa->setDescricao ( $arrayForm ['descricao'] );
-    $tarefa->setAtivo ( $ativo );
-
-
-    if ($tarefaDao->insert ( $tarefa )) {
-
-        echo '<p class="alert alert-success" role="alert">Tarefa adicionada com sucesso</p>';
-    }else{
-        echo '<p class="alert alert-danger" role="alert">Tarefa não adicionada</inser>ida</p>';
-    }
-
-}
-?>
 
 <div class="page-header">
     <h1>Adiciona Tarefa</h1>
 </div>
+<div id="resultAjax"></div>
 
 <p>
-    <a href="menuTarefas.php">
-        <span class="glyphicon glyphicon-arrow-left" ></span>Menu tarefas
+    <a href="listaTarefas.php">
+        <span class="glyphicon glyphicon-arrow-left" ></span>Lista Tarefas
     </a>
 </p>
 
 <div class="col-md-10 col-md-offset-1">
     <div class="container">
-        <form method="post" class="form-group" action="adicionaTarefa.php" id="adicionaTarefa">
+        <form role="form" method="POST" class="form-group"  data-async action="actions/adiciona.php" id="adicionaTarefa">
+
             <div class="form-group">
                 <label for="nome">Nome</label>
                 <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome da Tarefa" required autofocus/>
             </div>
+
             <div class="form-group">
                 <label for="descricao">Descricao </label>
                 <textarea name="descricao" class="form-control" rows="4" placeholder="Descrição da Tarefa" required></textarea>
             </div>
-            <div class="form-group">
+
+            <div class="form-group form-inline" >
                 <label for="ativo">Ativo </label>
-                <input type="checkbox" class="" name="ativo" value="true" checked />
+                <input type="checkbox" class="checkbox" name="ativo" value="true" checked />
+                <span class="col-md-offset-1"></span>
+                <label for="dataFinalizacao">Data Finalização</label>
+                <input type="date" class="form-control" name="dataFinalizacao" required>
             </div>
-            <div class="form-group col-md-2">
-                <input type="submit" class="btn btn-primary btn-lg btn-block" name="gravar" value="gravar " />
+
+
+            <div class="form-group" >
+                <input type="button" class="btn bg-primary " value="gravar " id="btn-submit"/>
             </div>
         </form>
     </div>

@@ -1,12 +1,17 @@
 <?php
-require_once '../DB/DB.php';
-require_once '../Model/tarefa.php';
+
+if(!defined('ROOT_DIR'))
+    define('ROOT_DIR',$_SERVER['DOCUMENT_ROOT'].'/Tarefas/');
+
+//require_once '../Config/config.php';
+require_once ROOT_DIR.'/DB/DB.php';
+require_once ROOT_DIR.'/Model/tarefa.php';
 
 /**
  * Class tarefaDao reponsavel por persistir tarefa na bando de dados
  */
 class tarefaDao {
-    private $conexao;
+    private  $conexao;
 
     public function __construct() {
         $db = new DB ();
@@ -15,11 +20,21 @@ class tarefaDao {
 
 
     public function insert(Tarefa $tarefa) {
-        $query = "INSERT INTO `tarefa`( `nome`, `descricao`, `ativo`) VALUES (:nome,:descricao,:ativo)";
+        $query = "INSERT INTO `tarefa`(
+          `nome`,
+          `descricao`,
+          `dataFinalizacao`,
+          `ativo`)
+          VALUES (
+          :nome,
+          :descricao,
+          :dataFinalizacao,
+          :ativo)";
         try{
             $stmt = $this->conexao->prepare($query);
-            $stmt->bindValue(":nome",$tarefa->getNome());
+            $stmt->bindValue(":nome",$tarefa->getNome() );
             $stmt->bindValue(":descricao",$tarefa->getDescricao());
+            $stmt->bindValue(":dataFinalizacao",$tarefa->getDataFinalizacao());
             $stmt->bindValue(":ativo",$tarefa->getAtivo());
             return $stmt->execute();
         }catch(Exception $e){
@@ -41,11 +56,37 @@ class tarefaDao {
      * @param $idTarefa
      * @return object tarefa
      */
-    public function getTarefa($idTarefa) {
-        $query = "SELECT * FROM `tarefa` where id = " . $idTarefa;
-        $result = $this->conexao->query( $query );
-        return $result->fetchObject('Tarefa');
+    public function find($idTarefa) {
+        $query = "SELECT * FROM `tarefa` where id = :id ";
+        try{
+            $stmt = $this->conexao->prepare($query);
+            $stmt->bindValue(":id",$idTarefa);
+            $stmt->execute();
+            return $stmt->fetchObject('Tarefa');
+        }catch(PDOException $e){
+            print($e);
+        }
+        return false;
     }
+
+
+    /**
+     * @param $nomeTarefa
+     * @return object tarefa
+     */
+    public function findAll($nomeTarefa) {
+        $query = "SELECT * FROM `tarefa` where nome = :nome";
+        try{
+            $stmt = $this->conexao->prepare($query);
+            $stmt->bindValue(":nome",$nomeTarefa);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_CLASS,'Tarefa');
+        }catch(PDOException $e){
+            print($e);
+        }
+        return false;
+    }
+
 
     /** Executa update da tarefa
      * @param Tarefa $tarefa
@@ -53,17 +94,22 @@ class tarefaDao {
      */
     public function update(Tarefa $tarefa) {
 
-        $query = "UPDATE `tarefa` SET `nome`=:nome,`descricao`=:descricao,`ativo`=:ativo WHERE id = :id";
+        $query = "UPDATE `tarefa`
+                    SET
+                      `nome`=:nome,
+                      `descricao`=:descricao,
+                      `ativo`=:ativo,
+                      `dataFinalizacao`=:dataFinalizacao
+              WHERE id = :id";
 
         try{
             $stmt = $this->conexao->prepare($query);
             $stmt->bindValue(":id",$tarefa->getID());
             $stmt->bindValue(":nome",$tarefa->getNome());
             $stmt->bindValue(":descricao",$tarefa->getDescricao());
+            $stmt->bindValue(":dataFinalizacao",$tarefa->getDataFinalizacao());
             $stmt->bindValue(":ativo",$tarefa->getAtivo());
-
             return $stmt->execute();
-
         }catch(PDOException $e){
             print($e);
         }

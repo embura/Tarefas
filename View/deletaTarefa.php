@@ -14,14 +14,14 @@ $tarefaDao = new tarefaDao ();
 
 if($_REQUEST['id']){
     $id = $_REQUEST['id'];
-	
+
 	if($tarefaDao->delete($id)){
         header("location:listaTarefas.php");
     }
 }
 
 ?>
-<a href="AdminTarefas.php">Menu tarefas</a>
+<a href="listaTarefas.php">Menu tarefas</a>
 </body>
 </html>
 
