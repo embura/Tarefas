@@ -27,24 +27,17 @@
 <h2>Lista tarefas</h2>
 
 <div>
-    <div class="list-inline" >
-        <ul>
+    <div  >
+        <ul class="nav nav-pills">
             <il>
-                <div class="form-inline">
-                    <a class="btn btn-primary" href="adicionaTarefa.php">New</a>
-                    <!--
-                    <form action="actions/busca.php" method="POST">
-                        <input type="search" results="10" name="busca" id="busca" placeholder="Nome tarefa...">
-                        <button type="button" class="btn = btn-primary" id="busca" name="busca">Buscar</button>
-                    </form>
-                    -->
-                </div>
+                <a class="btn btn-primary" href="adicionaTarefa.php">Nova Tarefa</a>
             </il>
             <il>
-
-
+                <label>Busca</label>
+                <input type="search" id="search" placeholder="Nome da Tarefa..."/>
             </il>
         </ul>
+
     </div>
 </div>
 
@@ -79,7 +72,7 @@ $tarefas = $tarefaDao->selectAll();
             ?>
             <tr id=tarefa_<?=$tarefa->getID();?>>
                 <td><?=$tarefa->getID();?></td>
-                <td ><?=$tarefa->getNome();?></td>
+                <td class="nome" ><?=$tarefa->getNome();?></td>
                 <td class="tdDate">
                     <?php if($tarefa->getAtivo() == 1){?>
                         <a href="#" onClick="return  finalizaTarefa('<?=$tarefa->getID();?>')" >Finalizar</a>

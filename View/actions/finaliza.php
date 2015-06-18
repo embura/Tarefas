@@ -18,7 +18,7 @@ $id = $_REQUEST['idTarefa'];
 $tarefa = $tarefaDao->find($id);
 $tarefa->setAtivo(0);
 
-$data = date("Y-m-d h:i:s");
+$data = date("Y-m-d H:i:s");
 $tarefa->setDataFinalizacao($data);
 
 if($tarefaDao->update($tarefa)){

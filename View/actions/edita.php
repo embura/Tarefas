@@ -20,7 +20,7 @@ $tarefaDao = new tarefaDao ();
 $id = $_REQUEST ['id'];
 $tarefa = $tarefaDao->find ( $id );
 $_SESSION ['id'] = $id;
-$checked = ($tarefa->getAtivo () == '1') ? 'checked' : '';
+//$checked = ($tarefa->getAtivo () == '1') ? 'checked' : '';
 
 
 
@@ -30,7 +30,6 @@ if (isset($_REQUEST ['gravar'])) {
     $id = $_SESSION['id'];
     $ativo = ($arrayForm ['ativo'] == 'true') ? 1 : 0;
 
-    $tarefa->setID ( $id );
     $tarefa->setNome ( $arrayForm ['nome'] );
     $tarefa->setDescricao ( $arrayForm ['descricao'] );
     $tarefa->setAtivo ( $ativo );
@@ -44,7 +43,7 @@ if (isset($_REQUEST ['gravar'])) {
 
 }
 
-$checked = ($tarefa->getAtivo () == '1') ? 'checked' : '';
+//$checked = ($tarefa->getAtivo () == '1') ? 'checked' : '';
 unset ( $_SESSION );
 
 ?>
