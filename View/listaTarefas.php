@@ -34,6 +34,7 @@
             </il>
             <il>
                 <label>Busca</label>
+                <span class="glyphicon-search" ></span>
                 <input type="search" id="search" placeholder="Nome da Tarefa..."/>
             </il>
         </ul>
