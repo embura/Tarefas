@@ -36,6 +36,7 @@ class DB {
             $this->conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->conexao->setAttribute(PDO::ATTR_ORACLE_NULLS, PDO::NULL_EMPTY_STRING);
             $this->conexao->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
+            $this->conexao->setAttribute( PDO::ATTR_EMULATE_PREPARES, false );
             return $this->conexao;
         }catch(PDOException $e){
             echo "<pre>";

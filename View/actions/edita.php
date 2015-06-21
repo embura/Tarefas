@@ -14,7 +14,7 @@ require_once ROOT_DIR.'/DAO/tarefaDao.php';
 
 session_start ();
 
-$tarefa = new Tarefa();
+$tarefa = new tarefa();
 $tarefaDao = new tarefaDao ();
 
 $id = $_REQUEST ['id'];

@@ -17,7 +17,9 @@ require_once ROOT_DIR.'/Model/tarefa.php';
 require_once ROOT_DIR.'/DAO/tarefaDao.php';
 
 
-$nomeTarefa = $_POST['nome'];
+//echo "<pre>";
+$nomeTarefa = $_POST['search'];
+
 $tarefaDao = new tarefaDao();
 $tarefas = $tarefaDao->findAll($nomeTarefa);
 

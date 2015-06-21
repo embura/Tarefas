@@ -4,10 +4,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=GBK">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" type="text/css" href="Resources/css/style.css">
+    <link rel="stylesheet" type="text/css" href="Resources/css/tarefas.css">
+
     <script type="text/javascript" src="Resources/js/jquery-1.11.3.min.js" ></script>
-
-
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="Resources/css/bootstrap.min.css">
@@ -32,10 +31,17 @@
             <il>
                 <a class="btn btn-primary" href="adicionaTarefa.php">Nova Tarefa</a>
             </il>
-            <il>
-                <label>Busca</label>
-                <span class="glyphicon-search" ></span>
+            <li>
+                <label>Buscar</label>
+
+                <span class="glyphicon glyphicon-search" ></span>
                 <input type="search" id="search" placeholder="Nome da Tarefa..."/>
+
+            </li>
+            <il>
+                <label>Filtrar</label>
+                <span class="glyphicon glyphicon-filter" ></span>
+                <input type="search" id="filter" placeholder="Nome da Tarefa..."/>
             </il>
         </ul>
 
@@ -82,16 +88,26 @@ $tarefas = $tarefaDao->selectAll();
                     <?php }?>
                 </td>
                 <td>
-                    <a href="editaTarefa.php?id=<?=$tarefa->getID()?>" >Editar</a>
+
+                    <a href="editaTarefa.php?id=<?=$tarefa->getID()?>" >
+                        <span class="glyphicon glyphicon-edit" ></span>
+                    </a>
                 </td>
                 <td>
-                    <a href="#" onClick="removeTarefa(<?=$tarefa->getID();?>)" >Remover</a>
+                    <a href="#" onClick="removeTarefa(<?=$tarefa->getID();?>)" >
+                        <span class="glyphicon glyphicon-erase" ></span>
+                    </a>
                 </td>
             </tr>
         <?php
         }
         ?>
     </table>
+
+    <button id="anterior">&lsaquo; Anterior</button>
+    <span id="numeracao"></span>
+    <button id="proximo" >Próximo &rsaquo;</button>
+
 </div>
 
 

@@ -10,7 +10,7 @@
 
 require_once '../../DAO/tarefaDao.php';
 require_once '../../Model/tarefa.php';
-$tarefa = new Tarefa();
+$tarefa = new tarefa();
 $tarefaDao = new tarefaDao ();
 
 

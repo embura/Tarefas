@@ -17,7 +17,7 @@
 
 
     <script type="text/javascript" src="Resources/js/tarefa.js" ></script>
-    <link rel="stylesheet" href="Resources/css/style.css">
+    <link rel="stylesheet" href="Resources/css/tarefas.css">
 </head>
 <body>
 <?php

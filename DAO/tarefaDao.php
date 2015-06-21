@@ -49,7 +49,21 @@ class tarefaDao {
     public function selectAll() {
         $query = "SELECT * FROM `tarefa`";
         $stmt = $this->conexao->query($query);
-        return $stmt->fetchAll(PDO::FETCH_CLASS,'Tarefa');
+        return $stmt->fetchAll(PDO::FETCH_CLASS,'\Model\tarefa');
+    }
+
+    public function paginacao($inicio,$quantidade){
+        $query = "Select * FROM `tarefa` LIMIT :inicio,:quantidade";
+        try{
+            $stmt = $this->conexao->prepare($query);
+            $stmt->bindValue(":inicio",(int) $inicio,PDO::PARAM_INT);
+            $stmt->bindValue(":quantidade",(int) $quantidade,PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_CLASS,'\Model\tarefa');
+        }catch(PDOException $e){
+            print($e);
+        }
+
     }
 
     /**
@@ -62,7 +76,7 @@ class tarefaDao {
             $stmt = $this->conexao->prepare($query);
             $stmt->bindValue(":id",$idTarefa);
             $stmt->execute();
-            return $stmt->fetchObject('Tarefa');
+            return $stmt->fetchObject('\Model\tarefa');
         }catch(PDOException $e){
             print($e);
         }
@@ -75,12 +89,12 @@ class tarefaDao {
      * @return object tarefa
      */
     public function findAll($nomeTarefa) {
-        $query = "SELECT * FROM `tarefa` where nome = :nome";
+        $query = "SELECT * FROM `tarefa` where nome like ? ";
         try{
             $stmt = $this->conexao->prepare($query);
-            $stmt->bindValue(":nome",$nomeTarefa);
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_CLASS,'Tarefa');
+            //$stmt->bindValue(":nome",$nomeTarefa);
+            $stmt->execute(array("%".$nomeTarefa."%"));
+            return $stmt->fetchAll(PDO::FETCH_CLASS,'\Model\tarefa');
         }catch(PDOException $e){
             print($e);
         }
@@ -92,7 +106,7 @@ class tarefaDao {
      * @param Tarefa $tarefa
      * @return bool|mysqli_result
      */
-    public function update(Tarefa $tarefa) {
+    public function update(tarefa $tarefa) {
 
         $query = "UPDATE `tarefa`
                     SET

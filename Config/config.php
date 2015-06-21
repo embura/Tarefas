@@ -8,3 +8,4 @@
  */
 $nameProject = "/Tarefas";
 //define("ROOT_DIR",$_SERVER['DOCUMENT_ROOT'].$nameProject);
+define('ROOT_DIR',$_SERVER['DOCUMENT_ROOT'].'/Tarefas/');

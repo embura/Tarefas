@@ -12,18 +12,6 @@
 
 $(document).ready(function(){
 
-/*    document.querySelector('form input').oninvalid = function(evt) {
-
-        // cancela comportamento padrão do browser
-        evt.preventDefault();
-
-        // checa validade e mostra alert
-        if (!this.validity.valid) {
-            alert("Nome obrigatório!");
-        }
-    };*/
-
-
     $("#btn-submit").click(function(){
         var dados = $('form').serialize();
         var action = $( 'form' ).attr( 'action' );
@@ -33,22 +21,21 @@ $(document).ready(function(){
     });
 
 
-    $('#search').keyup(function()    {
-        searchTable($(this).val());
+    $('#filter').keyup(function(){
+        filterTable($(this).val());
     });
 
+    $('#search').keyup(function(){
+        busca($(this).val());
+    });
 
-
-
-
-
+    
 });
 
 
 function finalizaTarefa(idTarefa){
     $.post("actions/finaliza.php",{'idTarefa':idTarefa},function(resposta){
         $("#tarefa_"+idTarefa).html(resposta);
-    // $('.tdDate').filter("#tarefa_"+idTarefa).css( "border-color", "red" );
     });
 }
 
@@ -60,8 +47,45 @@ function removeTarefa(idTarefa){
 
 
 
+function paginacao(){
+    var inicio = 0;
+    var quantidade = 6;
+    var action = "actions/paginacao.php";
 
-function searchTable(inputVal)
+    $.post( action, {'inicio':inicio,'quantidade':quantidade},function( data ) {
+
+        //console.log(data);
+
+        var dados = $.parseJSON(data);
+        console.log(dados);
+        dados.each(function(indece,valor){
+            console.log(indece+" - "+valor);
+        });
+        paginar(dados,inicio,quantidade);
+    },'json');
+}
+
+function paginar(dados,pagina,tamanhoPagina) {
+
+    $('table > tr').remove();
+    var table = $('table');
+    for (var i = pagina * tamanhoPagina; i < dados.length && i < (pagina + 1) *  tamanhoPagina; i++) {
+        table.append(
+            $('<tr>')
+                .append($('<td>').append(dados[i][0]))
+                .append($('<td>').append(dados[i][1]))
+        )
+    }
+    $('#numeracao').text('Página ' + (pagina + 1) + ' de ' + Math.ceil(dados.length / tamanhoPagina));
+}
+
+function busca(target){
+    $.post( "actions/busca.php", {'search':target},function( data ) {
+        $("#lista").html( data );
+    })
+}
+
+function filterTable(inputVal)
 {
     var table = $('#lista');
     table.find('tr').each(function(index, row)
