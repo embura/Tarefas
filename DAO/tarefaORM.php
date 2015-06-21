@@ -2,6 +2,8 @@
 
 require_once "../DB/ORM.php";
 require_once "../Model/tarefa.php";
+
+
 class tarefaORM{
 
     private $entityManager;
@@ -13,8 +15,14 @@ class tarefaORM{
     }
 
     public function save(\Model\tarefa $tarefa){
-        $this->entityManager->persist($tarefa);
-        $this->entityManager->flush();
+        try{
+            $this->entityManager->persist($tarefa);
+            $this->entityManager->flush();
+            return true;
+        }catch(Exception $e){
+            return false;
+
+        }
     }
 
     public function get($id){
@@ -28,6 +36,21 @@ class tarefaORM{
 
     public function update(\Model\tarefa $tarefa){
         $tarefaTMP = $this->get($tarefa->getId());
+        $tarefaTMP->setNome($tarefa->getNome());
+        $tarefaTMP->setDescricao($tarefa->getDescricao());
+        $tarefaTMP->setDataFinalizacao($tarefa->getDataFinalizacao());
+        return $this->save($tarefaTMP);
+    }
+
+    public function delete($id){
+        try{
+            $tarefa = $this->entityManager->getPartialReference('\Model\tarefa',$id);
+            $this->entityManager->remove($tarefa);
+            $this->entityManager->flush();
+            return true;
+        }catch(Exception $e){
+            return false;
+        }
     }
 
 
